@@ -1,0 +1,45 @@
+{
+  "summary": {
+    "strategy_total_return": -0.0031699000853825376,
+    "buyhold_total_return": 0.039999999999999813,
+    "strategy_max_drawdown": -0.012754804892253873,
+    "buyhold_max_drawdown": -0.007843137254901933
+  },
+  "series": [
+    {
+      "date": "2025-01-02",
+      "equity": 100.0,
+      "buyhold": 100.0
+    },
+    {
+      "date": "2025-01-03",
+      "equity": 100.0,
+      "buyhold": 101.0
+    },
+    {
+      "date": "2025-01-06",
+      "equity": 99.505,
+      "buyhold": 100.5
+    },
+    {
+      "date": "2025-01-07",
+      "equity": 99.505,
+      "buyhold": 102.0
+    },
+    {
+      "date": "2025-01-08",
+      "equity": 98.7245,
+      "buyhold": 101.2
+    },
+    {
+      "date": "2025-01-09",
+      "equity": 98.7245,
+      "buyhold": 103.0
+    },
+    {
+      "date": "2025-01-10",
+      "equity": 99.683,
+      "buyhold": 104.0
+    }
+  ]
+}

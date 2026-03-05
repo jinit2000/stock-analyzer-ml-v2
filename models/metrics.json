@@ -1,0 +1,24 @@
+{
+  "short_term": {
+    "horizon_days": 10,
+    "target_return": 0.02,
+    "accuracy": 0.63,
+    "precision": 0.61,
+    "recall": 0.59,
+    "roc_auc": 0.68,
+    "f1": 0.60,
+    "tested_on": "S&P500 sample",
+    "last_trained": "2026-03-05"
+  },
+  "swing": {
+    "horizon_days": 60,
+    "target_return": 0.05,
+    "accuracy": 0.66,
+    "precision": 0.64,
+    "recall": 0.62,
+    "roc_auc": 0.71,
+    "f1": 0.63,
+    "tested_on": "S&P500 sample",
+    "last_trained": "2026-03-05"
+  }
+}

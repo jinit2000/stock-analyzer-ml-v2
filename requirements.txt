@@ -1,0 +1,11 @@
+yfinance
+pandas
+numpy
+scikit-learn
+ta
+matplotlib
+joblib
+fastapi
+uvicorn[standard]
+pytest
+pyarrow
