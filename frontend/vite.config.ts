@@ -6,4 +6,5 @@ export default defineConfig({
   server: {
     port: 5173,
   },
+  base: "/stock-analyzer-ml-v2/",
 })
