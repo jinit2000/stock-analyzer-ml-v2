@@ -1,159 +1,175 @@
-📈 Stock Analyzer ML v2
+# Stock Analyzer ML v2
 
-A machine-learning based stock analysis tool that provides probability signals for short-term and swing trading horizons.
-The project includes a FastAPI backend, a React web interface, and scripts for data preparation, model training, and evaluation.
+A full-stack machine learning application that estimates the probability a stock will hit a target return within a given time horizon.
 
-This project is an evolution of an earlier GUI prototype (stock-analyzer).
-Version 2 focuses on a cleaner architecture with an API, a web UI, and explainable model outputs.
+Built with a **FastAPI backend**, **React + Vite frontend**, **Docker**, and a **Jenkins CI/CD pipeline**.
 
-🚀 Overview
+> Evolution of [stock-analyzer](https://github.com/jinit2000/stock-analyzer) - rebuilt with an API, web UI, explainable model outputs, and production-ready infrastructure.
 
-The system estimates the probability that a stock will reach a target return within a given time horizon.
+---
 
-Two horizons are supported:
+## What It Does
 
-Short-term: ~10 trading days (quick momentum signals)
+Enter a ticker symbol and get two ML-powered predictions:
 
-Swing: ~60 trading days (multi-week trend signals)
+| Horizon | Window | Focus |
+|---|---|---|
+| Short-term | ~10 trading days | Momentum and mean-reversion signals |
+| Swing | ~60 trading days | Medium-term trend signals |
 
-Predictions are based on a combination of:
+Each prediction returns a **probability score**, a **BUY / HOLD / SELL label**, and the **top features driving the decision** - so the output is fully explainable, not a black box.
 
-Historical market data
+---
 
-Technical indicators (RSI, SMA, MACD, volatility, etc.)
+## Tech Stack
 
-Basic fundamental indicators (P/E, EPS, ROE)
+| Layer | Tech |
+|---|---|
+| Backend | Python, FastAPI, scikit-learn |
+| Frontend | React, TypeScript, Vite |
+| ML | Logistic Regression, pandas, ta |
+| Data | yfinance (Yahoo Finance) |
+| DevOps | Docker, Jenkins CI/CD |
+| Deployment | Render (API) + Vercel (UI) |
 
-Logistic regression classification models
+---
 
-The API returns both the prediction probability and feature contributions so the output is explainable.
+## Features
 
-🏗 Project Structure
+- Live stock data via Yahoo Finance
+- Technical indicators: RSI, MACD, SMA 50/200, volatility, Bollinger Bands
+- Fundamental indicators: P/E Ratio, EPS, Return on Equity
+- Two prediction horizons: short-term (10d) and swing (60d)
+- Explainable output - top contributing features shown per prediction
+- REST API with auto-generated docs at `/docs`
+- Dockerized backend
+- Jenkins pipeline for automated build and test
+
+---
+
+## Project Structure
+
+```
 stock-analyzer-ml-v2/
- ├── app/            # FastAPI application
- ├── stock_ml/       # Feature engineering and model utilities
- ├── scripts/        # Dataset building and training scripts
- ├── models/         # Saved models and metrics
- ├── data/           # Example datasets
- ├── frontend/       # React + Vite web UI
- ├── tests/          # Basic tests
- ├── Dockerfile
- ├── requirements.txt
- └── README.md
-📡 API Example
+├── app/          # FastAPI application and routes
+├── stock_ml/     # Feature engineering and model utilities
+├── scripts/      # Dataset building and model training scripts
+├── models/       # Saved trained models and metrics
+├── data/         # Example datasets
+├── frontend/     # React + Vite web UI
+├── tests/        # Unit tests
+├── Dockerfile
+├── Jenkinsfile
+└── requirements.txt
+```
 
-Example request:
+---
 
+## API Example
+
+```
 GET /analyze/AAPL
+```
 
-Example response (simplified):
+Response:
 
+```json
 {
   "short_term": {
-    "probability": 0.48,
-    "label": "HOLD"
+    "probability": 0.63,
+    "label": "BUY",
+    "top_features": ["RSI", "MACD", "SMA_50"]
   },
   "swing": {
     "probability": 0.51,
-    "label": "HOLD"
+    "label": "HOLD",
+    "top_features": ["P/E", "ROE", "SMA_200"]
   }
 }
-🖥 Web UI
+```
 
-The repository includes a small React frontend located in frontend/.
+Full API docs available at `http://localhost:8000/docs` after running locally.
 
-The UI allows you to:
+---
 
-Enter a ticker symbol
+## Running Locally
 
-View prediction probabilities
+**1. Clone the repo**
 
-See the most important features affecting the prediction
+```bash
+git clone https://github.com/jinit2000/stock-analyzer-ml-v2.git
+cd stock-analyzer-ml-v2
+```
 
-Display the latest price data
+**2. Start the API**
 
-▶ Running Locally
-1. Start the API
+```bash
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
 export ALLOWED_ORIGINS="http://localhost:5173"
-
 uvicorn app.main:app --reload --port 8000
+```
 
-API documentation will be available at:
+API docs available at: `http://127.0.0.1:8000/docs`
 
-http://127.0.0.1:8000/docs
-2. Start the Web UI
+**3. Start the frontend**
+
+```bash
 cd frontend
 npm install
 npm run dev
+```
 
-Open the UI in your browser:
+Open `http://localhost:5173` in your browser.
 
-http://localhost:5173
-🔎 Model Horizons (UI Explanation)
+---
 
-The UI shows two prediction horizons:
+## Running with Docker
 
-Short-term
-
-Horizon: ~10 trading days
-
-Focus: short momentum or mean-reversion signals
-
-Swing
-
-Horizon: ~60 trading days
-
-Focus: medium-term trends
-
-The interface also displays top contributing features so the prediction is interpretable.
-
-🧪 Training and Backtesting
-
-The repository includes scripts for:
-
-Building datasets
-
-Training models
-
-Cross-validation
-
-Exporting metrics
-
-Example:
-
-python scripts/build_dataset.py
-python scripts/train_models.py
-🐳 Docker
-
-You can run the API using Docker.
-
+```bash
 docker build -t stock-analyzer-ml .
 docker run -p 8000:8000 stock-analyzer-ml
-🌍 Deployment
+```
 
-A simple deployment setup:
+---
 
-Backend
+## Training the Models
 
-Render (FastAPI service)
+```bash
+python scripts/build_dataset.py
+python scripts/train_models.py
+```
 
-Frontend
+---
 
-Vercel (static React app)
+## Deployment
 
-Example environment variables:
+| Service | Platform |
+|---|---|
+| Backend (FastAPI) | Render |
+| Frontend (React) | Vercel |
 
-Frontend (Vercel):
+Environment variables:
 
+```
+# Frontend (Vercel)
 VITE_API_BASE_URL=https://your-api.onrender.com
 
-Backend (Render):
-
+# Backend (Render)
 ALLOWED_ORIGINS=https://your-ui.vercel.app
-⚠ Disclaimer
+```
 
-This project is for educational purposes only and should not be used as financial advice.
+---
+
+## Planned Improvements
+
+- [ ] Candlestick chart visualization
+- [ ] TSX (Canadian) ticker support
+- [ ] Sector-relative scoring
+- [ ] Upgrade to XGBoost model
+- [ ] Portfolio-level analysis (multiple tickers at once)
+
+---
+
+> **Disclaimer:** This project is for educational purposes only. Always do your own research before making investment decisions.
